@@ -6,7 +6,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 14 // FB, Google, UI, UserPools all need 14, Hosted UI needs 16
+        minSdkVersion 15 // FB, Google, UI, UserPools all need 14, Hosted UI needs 16
         targetSdkVersion 29
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }

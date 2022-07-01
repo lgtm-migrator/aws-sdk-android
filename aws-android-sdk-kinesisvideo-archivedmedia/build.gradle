@@ -5,13 +5,19 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 21 // for kinesisvideo, which uses camera2 APIs.
+        minSdkVersion 24 // for kinesisvideo, which uses camera2 APIs.
         targetSdkVersion 29
     }
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
 }
 
 dependencies {
