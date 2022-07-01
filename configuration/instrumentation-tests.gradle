@@ -1,0 +1,29 @@
+
+/*
+    Modules with backend setup
+ */
+def test_modules = [
+        'aws-android-sdk-mobile-client',
+        'aws-android-sdk-s3-test',
+        'aws-android-sdk-pinpoint-test',
+        'aws-android-sdk-iot-test',
+        'aws-android-sdk-apigateway-test',
+        'aws-android-sdk-core-test',
+        'aws-android-sdk-cognitoidentityprovider-test'
+]
+
+subprojects {
+    afterEvaluate { project ->
+        if (test_modules.contains(project.name)) {
+            task runTestsInDeviceFarm {
+                assembleAndroidTest
+                doLast {
+                    exec {
+                        commandLine("$rootDir.path/scripts/run_test_in_devicefarm.sh")
+                        args([project.name])
+                    }
+                }
+            }
+        }
+    }
+}
