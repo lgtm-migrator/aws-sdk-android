@@ -17,6 +17,7 @@ subprojects {
     afterEvaluate { project ->
         if (test_modules.contains(project.name)) {
             task runTestsInDeviceFarm {
+                dependsOn(assembleAndroidTest)
                 doLast {
                     exec {
                         commandLine("$rootDir.path/scripts/run_test_in_devicefarm.sh")
