@@ -1,6 +1,7 @@
 #!/bin/bash
 project_arn=$DEVICEFARM_PROJECT_ARN
-device_pool_arn=$DEVICEFARM_POOL_ARN
+read -a device_pool_arns <<< $DEVICEFARM_POOL_ARNS
+device_pool_arn=${device_pool_arns[ $RANDOM % ${#device_pool_arns[@]} ]}
 module_name=$1
 file_name="$module_name-debug-androidTest.apk"
 full_path="$module_name/build/outputs/apk/androidTest/debug/$file_name"
@@ -10,7 +11,7 @@ if [[ -z "${project_arn}" ]]; then
   exit 1
 fi
 if [[ -z "${device_pool_arn}" ]]; then
-  echo "DEVICEFARM_POOL_ARN environment variable not set."
+  echo "DEVICEFARM_POOL_ARNS environment variable not set."
   exit 1
 fi
 
@@ -46,6 +47,7 @@ curl -H "Content-Type:application/octet-stream" -T $full_path $app_package_url
 # Wait to make sure the upload completes. This should actually make a get-upload call and check the status.
 echo "Waiting for uploads to complete"
 sleep 10
+
 
 # Schedule the test run in device farm
 echo "Scheduling test run"
